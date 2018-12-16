@@ -35,7 +35,43 @@ and
 
 `App > Body > Sidebar > UserStats > UserAvatar`
 
-cd into `redux-test` and run `npm i` and `npm start.
+cd into `context-test` and run `npm i` and `npm start.
+
+```js
+import React from 'react'
+
+import Nav from './Nav'
+
+class App extends React.Component {
+  render () {
+    return (
+      <div className = "app">
+      <Nav />
+      </div>
+    )
+  }
+}
+
+export default App
+```
+
+```js
+import React from 'react'
+
+import UserAvatar from './UserAvatar'
+
+function Nav() {
+  return (
+    <div className="nav">
+      <UserAvatar />
+    </div>
+  )
+}
+
+export default Nav
+```
+
+
 
 There are 3 important pieces to the context API:
 
@@ -47,9 +83,7 @@ The Provider is very similar to React-Redux’s Provider. It accepts a value pro
 
 The Consumer works a bit like React-Redux’s connect function, tapping into the data and making it available to the component that uses it.
 
-```js
 
-```
 
 ## Adding React
 
