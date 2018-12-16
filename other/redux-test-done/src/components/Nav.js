@@ -5,7 +5,7 @@ import UserAvatar from './UserAvatar'
 function Nav() {
   return (
     <div className="nav">
-      <UserAvatar />
+      <UserAvatar size="small" />
     </div>
   )
 }
