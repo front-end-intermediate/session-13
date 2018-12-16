@@ -47,7 +47,9 @@ The Provider is very similar to React-Redux’s Provider. It accepts a value pro
 
 The Consumer works a bit like React-Redux’s connect function, tapping into the data and making it available to the component that uses it.
 
+```js
 
+```
 
 ## Adding React
 
