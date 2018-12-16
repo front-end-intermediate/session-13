@@ -71,11 +71,74 @@ function Nav() {
 export default Nav
 ```
 
+Add state to `App.js`:
 
+```js
+import React from 'react'
+
+import Nav from './Nav'
+
+class App extends React.Component {
+
+  state = {
+    user: {
+      avatar:
+      "https://s.gravatar.com/avatar/3edd11d6747465b235c79bafdb85abe8?s=80",
+      name: "Daniel",
+      followers: 1234,
+      following: 123
+    }
+  };
+  
+  render () {
+    return (
+      <div className = "app">
+      <Nav user={this.state.user} />
+      </div>
+    )
+  }
+}
+
+export default App
+```
+
+And pass the user to `Nav.js`: `<Nav user={this.state.user} />`
+
+Pass the user to `Nav` via props:
+
+```js
+import React from 'react'
+
+import UserAvatar from './UserAvatar'
+
+function Nav(props) {
+  return (
+    <div className="nav">
+      <UserAvatar user={props.user} />
+    </div>
+  )
+}
+
+export default Nav
+```
+
+Consume the props in `UserAvatar`:
+
+```js
+import React from 'react';
+
+const UserAvatar = (props) => (
+  <div className="user-avatar">
+    {props.user.name}
+  </div>
+);
+
+export default UserAvatar
+```
 
 There are 3 important pieces to the context API:
 
-* The `React.createContext` function which creates the context
+* The `React.createContext()` function which creates the context
 * The `Provider` (returned by `createContext`) which provides data
 * The `Consumer` (also returned by `createContext`) which taps into the provider to extract the data
 
@@ -83,7 +146,117 @@ The Provider is very similar to React-Redux’s Provider. It accepts a value pro
 
 The Consumer works a bit like React-Redux’s connect function, tapping into the data and making it available to the component that uses it.
 
+`UserProvider:`
 
+```js
+import React from "react"
+
+const UserContext = React.createContext();
+
+class UserProvider extends React.Component {
+
+  state = {
+    user: {
+      avatar:
+      "https://s.gravatar.com/avatar/3edd11d6747465b235c79bafdb85abe8?s=80",
+      name: "Daniel",
+      followers: 1234,
+      following: 123
+    }
+  };
+
+render() {
+    return (
+        <UserContext.Provider value={this.state.user}>
+          {this.props.children}
+        </UserContext.Provider>
+    );
+  } 
+}
+
+export const UserConsumer = UserContext.Consumer
+
+export default UserProvider
+```
+
+`index.js`:
+
+```js
+import React from "react";
+import ReactDOM from "react-dom";
+
+import App from './components/App'
+import UserProvider from './components/UserProvider'
+
+ReactDOM.render(
+  <UserProvider>
+    <App />
+  </UserProvider>, document.querySelector("#root"));
+```
+
+```js
+import React from "react"
+import Nav from './Nav'
+import Body from './Body'
+
+class App extends React.Component {
+
+render() {
+    return (
+      <div className="app">
+          <Nav />
+          <Body />
+      </div>
+    );
+  } 
+}
+
+export default App
+```
+
+```js
+import React from 'react'
+import UserAvatar from './UserAvatar'
+
+const Nav = () => (
+  <div className="nav">
+    <UserAvatar size="small" />
+  </div>
+);
+
+export default Nav
+```
+
+Add `<Body />` to App.
+
+`Userstats.js`:
+
+```js
+import React from 'react';
+
+import UserAvatar from './UserAvatar'
+
+import { UserConsumer } from './UserProvider'
+
+const UserStats = () => (
+  <UserConsumer>
+   { user => (
+        <div className="user-stats">
+        <div>
+          <UserAvatar />
+          {user.name}
+        </div>
+        <div className="stats">
+          <div>{user.followers} Followers</div>
+          <div>Following {user.following}</div>
+        </div>
+      </div>
+   ) }
+  </UserConsumer>
+);
+
+export default UserStats
+```
 
 ## Adding React
 
