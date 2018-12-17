@@ -2,7 +2,7 @@
 
 ## Homework
 
-Work on your final projects. They should consist of a simple full stack (front and back end) master / detail view that uses React for the front end and has a backend which can be done in Express with mLab or with a local JSON file. You can use Firebase if you wish however be sure to use the same version of re-base that we used in session 10 - unless you really know what you are doing.
+Final projects are due.
 
 ## Reading
 
@@ -618,6 +618,8 @@ As well as functions.
 
 This can be remediated via middleware.
 
+In scripts:
+
 ```js
 const thunk = (store) => (next) => (action) => {
   if (typeof action === 'function') {
@@ -628,6 +630,8 @@ const thunk = (store) => (next) => (action) => {
 }
 ```
 
+Add the middleware to the list:
+
 ```js
 const store = Redux.createStore(Redux.combineReducers({
   pirates,
@@ -636,13 +640,17 @@ const store = Redux.createStore(Redux.combineReducers({
 }), Redux.applyMiddleware(thunk, checker, logger))
 ```
 
-The same method can be done for any async API calls:
+We can use the same technique for removing data logic for any of our async API calls:
+
+`Weapons`:
 
 ```js
 removeWeapon = (weapon) => {
   this.props.store.dispatch(handleDeleteWeapon(weapon))
 }
 ```
+
+Scripts:
 
 ```js
 function handleDeleteWeapon(weapon) {
