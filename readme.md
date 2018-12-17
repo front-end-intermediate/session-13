@@ -260,7 +260,7 @@ export default UserStats
 
 ## Adding React
 
-We are continuing with the project from [last class](https://github.com/front-end-intermediate/session-11#adding-react) before moving forward with the below.
+<!-- We are continuing with the project from [last class](https://github.com/front-end-intermediate/session-11#adding-react) before moving forward with the below.
 
 ```html
 <script src='https://unpkg.com/react@16.3.0-alpha.1/umd/react.development.js'></script>
@@ -478,9 +478,9 @@ class App extends React.Component {
     )
   }
 }
-```
+``` -->
 
-Edit Weapons to add a header, an input field and button as well:
+<!-- Edit Weapons to add a header, an input field and button as well:
 
 ```js
 class Weapons extends React.Component {
@@ -531,9 +531,9 @@ class Weapons extends React.Component {
     )
   }
 }
-```
+``` -->
 
-You should now be able to add a weapon to state.
+<!-- You should now be able to add a weapon to state.
 
 ## Render the Lists
 
@@ -627,9 +627,9 @@ class App extends React.Component {
 }
 ```
 
-`forceUpdate()` triggers React's render() method. It is a bit of a hack at the moment but we will get rid of it soon. The alternative would be to add state to the App component but since we are going to implement state outside the react app we will live with it for now.
+`forceUpdate()` triggers React's render() method. It is a bit of a hack at the moment but we will get rid of it soon. The alternative would be to add state to the App component but since we are going to implement state outside the react app we will live with it for now. -->
 
-## Remove Items
+<!-- ## Remove Items
 
 Add remove item to the react slice.
 
@@ -743,9 +743,9 @@ class Weapons extends React.Component {
     )
   }
 }
-```
+``` -->
 
-## Toggle
+<!-- ## Toggle
 
 Add the toggle functionality that marks a Pirate as spotted.
 
@@ -857,7 +857,7 @@ function List (props) {
     </ul>
   )
 }
-```
+``` -->
 
 ## Asynchronous Data
 
@@ -1050,5 +1050,33 @@ class App extends React.Component {
 }
 ```
 
+### Removing Items
 
+OPtimistic - remove the item before it gets removed from the db.
+
+Pirates:
+
+```js
+removeItem = (pirate) => {
+        this.props.store.dispatch(removePirateAction(pirate.id))
+        return API.deletePirate(pirate.id)
+          .catch(() => {
+            this.props.store.dispatch(addPirateAction(pirate))
+            alert('An error occurred. Try again.')
+          })
+      }
+```
+
+Weapons
+
+```js
+      removeItem = (weapon) => {
+        this.props.store.dispatch(removeWeaponAction(weapon.id))
+         return API.deleteWeapon(weapon.id)
+          .catch(() => {
+            this.props.store.dispatch(addWeaponAction(weapon))
+            alert('An error occurred. Try again.')
+          })
+      }
+```
 

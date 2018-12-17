@@ -1,3 +1,17 @@
+const store = Redux.createStore(Redux.combineReducers({
+  pirates,
+  weapons,
+  loading
+}), Redux.applyMiddleware(checker, logger))
+
+store.subscribe(() => {
+  const { weapons, pirates } = store.getState()
+})
+
+function generateId() {
+  return Date.now()
+}
+
 function List(props) {
   return (
     <ul>
@@ -30,6 +44,11 @@ class Pirates extends React.Component {
 
   removeItem = (pirate) => {
     this.props.store.dispatch(removePirateAction(pirate.id))
+    return API.deletePirate(pirate.id)
+      .catch(() => {
+        this.props.store.dispatch(addPirateAction(pirate))
+        alert('An error occurred. Try again.')
+      })
   }
 
   toggleItem = (id) => {
@@ -69,6 +88,11 @@ class Weapons extends React.Component {
 
   removeItem = (weapon) => {
     this.props.store.dispatch(removeWeaponAction(weapon.id))
+     return API.deleteWeapon(weapon.id)
+      .catch(() => {
+        this.props.store.dispatch(addWeaponAction(weapon))
+        alert('An error occurred. Try again.')
+      })
   }
 
   render() {
@@ -91,15 +115,26 @@ class Weapons extends React.Component {
 
 class App extends React.Component {
 
-  componentDidMount() {
+  componentDidMount () {
     const { store } = this.props
-    store.subscribe( () => this.forceUpdate() )
+  
+    Promise.all([
+      API.fetchPirates(),
+      API.fetchWeapons()
+    ]).then( ([pirates, weapons]) => {
+      store.dispatch(receiveDataAction(pirates, weapons))
+      })
+    
+    store.subscribe( () => this.forceUpdate())
   }
 
-  render() {
-    
+  render(){
     const { store } = this.props
-    const { pirates, weapons } = store.getState()
+    const { pirates, weapons, loading } = store.getState()
+
+    if (loading === true) {
+      return <h3>Loading...</h3>
+    }
 
     return(
       <React.Fragment>

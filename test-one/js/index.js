@@ -83,7 +83,7 @@
   API.deleteWeapon = function (id) {
     return new Promise((res, rej) => {
       setTimeout(() => {
-        weapon = weapon.filter((weapon) => weapon.id !== id);
+        weapon = weapons.filter((weapon) => weapon.id !== id);
         fail() ? rej(): res(weapons);
       }, 300)
     });
