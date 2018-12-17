@@ -4,10 +4,6 @@
 
 Final projects are due.
 
-## Reading
-
-A [Redux crash course](https://www.youtube.com/watch?v=93p3LxR9xfM) on YouTube.
-
 ## Redux and React's Context API
 
 Review the Redux sample.
