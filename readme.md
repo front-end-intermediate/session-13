@@ -8,7 +8,9 @@ Final projects are due.
 
 Review the Redux sample.
 
-In session-9 branch fall2018-done:
+In session-9 branch fall2018-done.
+
+`npm i redux react-redux`
 
 `index.js`:
 
