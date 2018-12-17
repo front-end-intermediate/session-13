@@ -12,6 +12,75 @@ A [Redux crash course](https://www.youtube.com/watch?v=93p3LxR9xfM) on YouTube.
 
 Review the Redux sample.
 
+In session-9 branch fall2018-done:
+
+`index.js`:
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+
+import { createStore } from "redux"
+import { Provider } from "react-redux"
+
+function reducer(state = {}, action) {
+  switch (action.type) {
+    case "SET_USER":
+      return {
+        ...state,
+        user: action.user
+      }
+    default:
+      return state
+  }
+}
+
+const store = createStore(reducer)
+
+store.dispatch({
+  type: "SET_USER",
+    user: {
+      avatar:
+        "https://s.gravatar.com/avatar/3edd11d6747465b235c79bafdb85abe8?s=80",
+      name: "Daniel",
+      followers: 1234,
+      following: 123
+    }
+})
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
+```
+
+Header:
+
+```js
+import React from 'react';
+import '../assets/css/Header.css'
+import logo from '../assets/img/anchor.svg';
+
+import { connect } from "react-redux"
+
+const foo = state => ({
+  user: state.user
+})
+
+const Header = connect(foo)(({ user }) => (
+  <div className="header">
+    <img src={logo} className="logo" alt="logo" />
+    <h1>{user.name}</h1>
+  </div>
+))
+
+export default Header;
+
+```
+
 ![Image of Interface](/other/interface.png)
 
 ```html
